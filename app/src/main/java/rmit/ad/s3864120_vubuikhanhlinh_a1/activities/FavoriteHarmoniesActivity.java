@@ -57,17 +57,22 @@ public class FavoriteHarmoniesActivity extends AppCompatActivity {
 
     private List<Color> deserializeHarmony(String serializedHarmony) {
         List<Color> harmony = new ArrayList<>();
-        String[] hexCodes = serializedHarmony.split(",");
+        String[] parts = serializedHarmony.split("\\|", 2); // Split into type and colors
+        if (parts.length != 2) {
+            Log.e("FavoriteHarmonies", "Invalid serialized harmony format: " + serializedHarmony);
+            return harmony;
+        }
+
+        String type = parts[0]; // First part is the type
+        String[] hexCodes = parts[1].split(","); // Second part is the list of colors
         for (String hexCode : hexCodes) {
             if (ColorUtils.isValidHexCode(hexCode)) {
-                harmony.add(new Color(hexCode)); // Use the single-parameter constructor
+                harmony.add(new Color(type, hexCode)); // Save the type in the Color object
             } else {
-                Log.e("FavoriteHarmonies", "Invalid Hex code during deserialization: " + hexCode);
+                Log.e("FavoriteHarmonies", "Invalid Hex code: " + hexCode);
             }
         }
         return harmony;
     }
-
-
 
 }

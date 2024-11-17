@@ -1,7 +1,6 @@
 package rmit.ad.s3864120_vubuikhanhlinh_a1.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,57 +50,40 @@ public class HarmonyAdapter extends RecyclerView.Adapter<HarmonyAdapter.HarmonyV
 
     @Override
     public void onBindViewHolder(@NonNull HarmonyViewHolder holder, int position) {
-        // Set the title based on the harmony type
-        switch (position) {
-            case 0:
-                holder.tvHarmonyTitle.setText("Complementary Colors");
-                break;
-            case 1:
-                holder.tvHarmonyTitle.setText("Analogous Colors");
-                break;
-            case 2:
-                holder.tvHarmonyTitle.setText("Triadic Colors");
-                break;
+        List<Color> harmony = harmonies.get(position);
+
+        // Use the first color's name as the type for the title
+        if (!harmony.isEmpty()) {
+            holder.tvHarmonyTitle.setText(harmony.get(0).getColorName()); // Get the type from the first color
+        } else {
+            holder.tvHarmonyTitle.setText("Unknown Harmony"); // Fallback for empty harmonies
         }
 
-        // Populate the color container dynamically
-        List<Color> harmony = harmonies.get(position);
         holder.colorContainer.removeAllViews(); // Clear existing views
         for (Color color : harmony) {
-            // Inflate a single color row
             View colorRow = LayoutInflater.from(context).inflate(R.layout.item_color_row, holder.colorContainer, false);
 
-            // Set swatch color and hex code
             View swatch = colorRow.findViewById(R.id.colorSwatch);
-            String hexCode = color.getHexCode();
-
-            if (ColorUtils.isValidHexCode(hexCode)) {
-                try {
-                    swatch.setBackgroundColor(android.graphics.Color.parseColor(hexCode));
-                } catch (IllegalArgumentException e) {
-                    Log.e(TAG, "Invalid Hex code: " + hexCode, e);
-                    swatch.setBackgroundColor(android.graphics.Color.TRANSPARENT); // Fallback color
-                }
+            if (ColorUtils.isValidHexCode(color.getHexCode())) {
+                swatch.setBackgroundColor(android.graphics.Color.parseColor(color.getHexCode()));
             } else {
-                Log.e(TAG, "Invalid Hex code format: " + hexCode);
-                swatch.setBackgroundColor(android.graphics.Color.TRANSPARENT); // Fallback color
+                swatch.setBackgroundColor(android.graphics.Color.TRANSPARENT);
             }
 
             TextView hexCodeTextView = colorRow.findViewById(R.id.tvColorHex);
-            hexCodeTextView.setText(hexCode);
+            hexCodeTextView.setText(color.getHexCode());
 
-            // Add the row to the container
             holder.colorContainer.addView(colorRow);
         }
 
-        // Handle Save to Favorites button (only if listener is provided)
         if (listener != null) {
             holder.btnSaveToFavorites.setVisibility(View.VISIBLE);
             holder.btnSaveToFavorites.setOnClickListener(v -> listener.onSaveToFavorites(harmony));
         } else {
-            holder.btnSaveToFavorites.setVisibility(View.GONE); // Hide button if no listener
+            holder.btnSaveToFavorites.setVisibility(View.GONE);
         }
     }
+
 
     @Override
     public int getItemCount() {

@@ -40,49 +40,73 @@ public class ColorHarmonyActivity extends AppCompatActivity {
         String selectedColorHex = getIntent().getStringExtra("selectedColor");
         harmonyList = generateHarmonySchemes(selectedColorHex);
 
-        // Set up adapter
-        harmonyAdapter = new HarmonyAdapter(this, harmonyList, this::saveToFavorites);
+        // Set up adapter with the updated saveToFavorites
+        harmonyAdapter = new HarmonyAdapter(this, harmonyList, harmony -> {
+            int position = harmonyList.indexOf(harmony);
+            String type = getHarmonyType(position); // Determine type based on position
+            saveToFavorites(type, harmony); // Pass type and harmony to save
+        });
         recyclerView.setAdapter(harmonyAdapter);
     }
+
 
     private List<List<Color>> generateHarmonySchemes(String selectedColorHex) {
         List<List<Color>> harmonies = new ArrayList<>();
 
-        // Convert the Hex code to HSL using ColorUtils
-        float[] hsl = ColorUtils.hexToHSL(selectedColorHex);
-
-        // Generate harmony schemes using HarmonyCalculator
-        List<Color> complementary = HarmonyCalculator.getComplementaryColor(hsl);
-        List<Color> analogous = HarmonyCalculator.getAnalogousColors(hsl);
-        List<Color> triadic = HarmonyCalculator.getTriadicColors(hsl);
-
-        // Add the generated harmonies to the list
+        // Generate Complementary Colors
+        List<Color> complementary = HarmonyCalculator.getComplementaryColor(ColorUtils.hexToHSL(selectedColorHex));
+        for (Color color : complementary) {
+            color.setColorName("Complementary Colors");
+        }
         harmonies.add(complementary);
+
+        // Generate Analogous Colors
+        List<Color> analogous = HarmonyCalculator.getAnalogousColors(ColorUtils.hexToHSL(selectedColorHex));
+        for (Color color : analogous) {
+            color.setColorName("Analogous Colors");
+        }
         harmonies.add(analogous);
+
+        // Generate Triadic Colors
+        List<Color> triadic = HarmonyCalculator.getTriadicColors(ColorUtils.hexToHSL(selectedColorHex));
+        for (Color color : triadic) {
+            color.setColorName("Triadic Colors");
+        }
         harmonies.add(triadic);
 
         return harmonies;
     }
 
-    private void saveToFavorites(List<Color> harmony) {
+    private String getHarmonyType(int position) {
+        switch (position) {
+            case 0:
+                return "Complementary Colors";
+            case 1:
+                return "Analogous Colors";
+            case 2:
+                return "Triadic Colors";
+            default:
+                return "Unknown Harmony";
+        }
+    }
+
+    private void saveToFavorites(String type, List<Color> harmony) {
         SharedPreferences sharedPreferences = getSharedPreferences("Favorites", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        // Get the current favorites from SharedPreferences
         Set<String> favorites = sharedPreferences.getStringSet("favoriteHarmonies", new HashSet<>());
 
-        // Serialize the harmony into a single JSON-like string
-        StringBuilder serializedHarmony = new StringBuilder();
+        // Serialize the harmony with its type
+        StringBuilder serializedHarmony = new StringBuilder(type).append("|"); // Add type
         for (Color color : harmony) {
             serializedHarmony.append(color.getHexCode()).append(",");
         }
 
-        // Remove the trailing comma
+        // Remove trailing comma if necessary
         if (serializedHarmony.length() > 0) {
             serializedHarmony.setLength(serializedHarmony.length() - 1);
         }
 
-        // Add the serialized harmony to the favorites
         favorites.add(serializedHarmony.toString());
         editor.putStringSet("favoriteHarmonies", favorites).apply();
 

@@ -12,6 +12,7 @@ public class HarmonyCalculator {
         List<Color> result = new ArrayList<>();
         float complementaryHue = (hsl[0] + 180) % 360; // 180° shift
         String complementaryHex = ColorUtils.hslToHex(complementaryHue, hsl[1], hsl[2]);
+        result.add(new Color("Base Color", ColorUtils.hslToHex(hsl[0], hsl[1], hsl[2])));
         result.add(new Color("Complementary", complementaryHex));
         return result;
     }
@@ -21,8 +22,8 @@ public class HarmonyCalculator {
         List<Color> result = new ArrayList<>();
         float hue1 = (hsl[0] + 30) % 360; // +30°
         float hue2 = (hsl[0] - 30 + 360) % 360; // -30°
-        result.add(new Color("Analogous 1", ColorUtils.hslToHex(hue1, hsl[1], hsl[2])));
         result.add(new Color("Base Color", ColorUtils.hslToHex(hsl[0], hsl[1], hsl[2])));
+        result.add(new Color("Analogous 1", ColorUtils.hslToHex(hue1, hsl[1], hsl[2])));
         result.add(new Color("Analogous 2", ColorUtils.hslToHex(hue2, hsl[1], hsl[2])));
         return result;
     }
@@ -32,8 +33,8 @@ public class HarmonyCalculator {
         List<Color> result = new ArrayList<>();
         float hue1 = (hsl[0] + 120) % 360; // +120°
         float hue2 = (hsl[0] + 240) % 360; // +240°
-        result.add(new Color("Triadic 1", ColorUtils.hslToHex(hue1, hsl[1], hsl[2])));
         result.add(new Color("Base Color", ColorUtils.hslToHex(hsl[0], hsl[1], hsl[2])));
+        result.add(new Color("Triadic 1", ColorUtils.hslToHex(hue1, hsl[1], hsl[2])));
         result.add(new Color("Triadic 2", ColorUtils.hslToHex(hue2, hsl[1], hsl[2])));
         return result;
     }
