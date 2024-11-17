@@ -1,10 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ColorWheelActivity">
+    android:orientation="vertical"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Title -->
+    <TextView
+        android:id="@+id/tvColorWheelTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Interactive Color Wheel"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Placeholder for the Color Wheel -->
+    <ImageView
+        android:id="@+id/imgColorWheel"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:src="@drawable/color_wheel_placeholder"
+        android:contentDescription="Color Wheel"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Selected Color Details -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <View
+            android:id="@+id/colorSwatch"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="16dp"
+            android:background="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvColorDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tap the wheel to select a color"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Back Button -->
+    <Button
+        android:id="@+id/btnBackToMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Back to Main"
+        android:layout_marginTop="16dp" />
+
+    <!-- Button to View Harmonies -->
+    <Button
+        android:id="@+id/btnViewHarmonies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Color Harmonies"
+        android:layout_marginTop="8dp" />
+</LinearLayout>
