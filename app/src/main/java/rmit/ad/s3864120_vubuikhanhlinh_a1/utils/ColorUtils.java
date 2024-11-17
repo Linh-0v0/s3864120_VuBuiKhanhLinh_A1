@@ -4,6 +4,7 @@ public class ColorUtils {
     public static boolean isValidHexCode(String hexCode) {
         return hexCode != null && hexCode.matches("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$");
     }
+
     // Converts a hex code to HSL values
     public static float[] hexToHSL(String hexCode) {
         int[] rgb = hexToRGB(hexCode); // First, convert Hex to RGB
@@ -59,17 +60,29 @@ public class ColorUtils {
         float r = 0, g = 0, b = 0; // RGB in range [0, 1]
 
         if (hue < 60) {
-            r = c; g = x; b = 0;
+            r = c;
+            g = x;
+            b = 0;
         } else if (hue < 120) {
-            r = x; g = c; b = 0;
+            r = x;
+            g = c;
+            b = 0;
         } else if (hue < 180) {
-            r = 0; g = c; b = x;
+            r = 0;
+            g = c;
+            b = x;
         } else if (hue < 240) {
-            r = 0; g = x; b = c;
+            r = 0;
+            g = x;
+            b = c;
         } else if (hue < 300) {
-            r = x; g = 0; b = c;
+            r = x;
+            g = 0;
+            b = c;
         } else {
-            r = c; g = 0; b = x;
+            r = c;
+            g = 0;
+            b = x;
         }
 
         // Convert to [0, 255] range

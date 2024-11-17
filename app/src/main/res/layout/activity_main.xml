@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-android:padding="16dp"
-android:gravity="center">
-
-<!-- Title -->
-<TextView
-    android:id="@+id/appTitle"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Color Theory Explorer"
-    android:textSize="24sp"
-    android:textStyle="bold"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="center"
-    android:layout_marginBottom="24dp" />
+    android:orientation="vertical"
+    android:padding="16dp">
 
-<!-- Button to open Color Wheel Activity -->
-<Button
-    android:id="@+id/btnColorWheel"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Explore Color Wheel"
-    android:layout_marginBottom="16dp" />
+    <!-- Title -->
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:text="Color Theory Explorer"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
-<!-- Button to open Favorites Activity -->
-<Button
-    android:id="@+id/btnFavorites"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="View Favorites"
-    android:layout_marginBottom="16dp" />
+    <!-- Button to open Color Wheel Activity -->
+    <Button
+        android:id="@+id/btnColorWheel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Explore Color Wheel" />
+
+    <!-- Button to open Favorites Activity -->
+    <Button
+        android:id="@+id/btnFavorites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="View Favorites" />
 
 </LinearLayout>
